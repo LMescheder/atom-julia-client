@@ -3,7 +3,7 @@ type EvalError
   bt
 end
 
-# @render Inline e::EvalError Text(sprint(Base.showerror, e.err, e.bt))
+# @render Inline e::EvalError Text{UTF8String}(sprint(Base.showerror, e.err, e.bt))
 
 rendererr(err) = strong(".error-description", err)
 

@@ -18,7 +18,7 @@ setdisplay(Console(), Any, Console())
 # Editor
 
 render(e::Editor, ::Void; options = d()) =
-  render(e, Text("✓"), options = options)
+  render(e, Text{UTF8String}("✓"), options = options)
 
 render(::Editor, x; options = d()) =
   render(Inline(), Copyable(x), options = options)

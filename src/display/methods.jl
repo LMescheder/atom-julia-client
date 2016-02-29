@@ -19,8 +19,8 @@ appendline(path, line) = line > 0 ? "$path:$line" : path
 baselink(path, line) =
   path == "no file" ? span(".fade", path) :
   isabspath(path) || isuntitled(path) ?
-    link(path, line, Text(pkgpath(appendline(path, line)))) :
-    link(basepath(path), line, Text(normpath("base/$(appendline(path, line))")))
+    link(path, line, Text{UTF8String}(pkgpath(appendline(path, line)))) :
+    link(basepath(path), line, Text{UTF8String}(normpath("base/$(appendline(path, line))")))
 
 stripparams(t) = replace(t, r"\{([A-Za-z, ]*?)\}", "")
 
@@ -61,6 +61,6 @@ end
   ms = methodarray(m)
   isempty(m) && return "$(m.name) has no methods."
   r(x) = render(i, x, options = options)
-  Tree(Text("$(m.name) has $(length(ms)) method$(length(ms)==1?"":"s"):"),
+  Tree(Text{UTF8String}("$(m.name) has $(length(ms)) method$(length(ms)==1?"":"s"):"),
        [table(".methods", [tr(td(c(r(a))), td(c(r(b)))) for (a, b) in map(view, ms)])])
 end

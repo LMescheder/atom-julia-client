@@ -2,7 +2,7 @@ using Hiccup
 
 fade(x) = span(".fade", x)
 
-@render Inline x::Text begin
+@render Inline x::Text{UTF8String} begin
   ls = split(string(x), "\n")
   length(ls) > 1 ?
     Tree(Model(ls[1]), c(Model(join(ls[2:end], "\n")))) :
@@ -13,7 +13,7 @@ end
   if isbits(x)
     span(c(fade(string(typeof(x))), " ", string(x)))
   else
-    Text(stringmime("text/plain", x))
+    Text{UTF8String}(stringmime("text/plain", x))
   end
 end
 
@@ -30,8 +30,8 @@ import Base.Docs: doc
 
 @render Inline f::Function begin
   isgeneric(f) ?
-    Tree(Text(name(f)), [(doc(f) != nothing ? [doc(f)] : [])..., methods(f)]) :
-    Text(name(f))
+    Tree(Text{UTF8String}(name(f)), [(doc(f) != nothing ? [doc(f)] : [])..., methods(f)]) :
+    Text{UTF8String}(name(f))
 end
 
 @render Inline xs::Vector begin
@@ -54,7 +54,7 @@ end
             fade(" $(eltype(d).parameters[1]) → $(eltype(d).parameters[2]) with $(length(d)) entries"))), st)
 end
 
-@render i::Inline x::Number Text(sprint(show, x))
+@render i::Inline x::Number Text{UTF8String}(sprint(show, x))
 
 handleundefs(X::Vector) = handleundefs(X, 1:length(X))
 
